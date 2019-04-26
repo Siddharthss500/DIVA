@@ -166,25 +166,20 @@
         </div>
         <div class="content">
             <div class="row">
-                <div class="col-lg-4" style="flex: 0 0 40%; max-width: 40%">
-                    <div class="card card-chart">
+
+                <div class="col-lg-4 col-md-6" style="flex: 0 0 40%; max-width: 40%; height: 354.200px;">
+                    <div class="card card-chart" style="height: 334.2px;">
                         <div class="card-header">
-                            <!--<h5 class="card-category">Global Sales</h5>-->
-                            <h4 class="card-title">Top Tags</h4>
+                            <!--<h5 class="card-category">Email Statistics</h5>-->
+                            <h4 class="card-title">Top programming languages</h4>
                         </div>
                         <div class="card-body" style="height: 274.8px;">
-                            <div id="pie_chart"></div>
-                            <!--<div class="wordcloud_chart-area">
-                              <canvas id="lineChartExample"></canvas>
-                            </div>-->
+                            <div id="word_cloud"></div>
                         </div>
-                        <!--<div class="card-footer">
-                          <div class="stats">
-                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                          </div>
-                        </div>-->
                     </div>
                 </div>
+
+
                 <div class="col-lg-4 col-md-6" style="flex: 0 0 20%; max-width: 20%">
                     <div class="card card-chart" style="max-width: 100%;">
                         <div class="card-header">
@@ -239,17 +234,18 @@
                         </div>-->
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6" style="flex: 0 0 40%; max-width: 40%; height: 354.200px;">
-                    <div class="card card-chart" style="height: 334.2px;">
+
+                <div class="col-lg-4" style="flex: 0 0 40%; max-width: 40%">
+                    <div class="card card-chart">
                         <div class="card-header">
-                            <!--<h5 class="card-category">Email Statistics</h5>-->
-                            <h4 class="card-title">Top programming languages</h4>
+                            <h4 class="card-title">Top Tags</h4>
                         </div>
                         <div class="card-body" style="height: 274.8px;">
-                            <div id="word_cloud"></div>
+                            <div id="pie_chart"></div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-md-6" style="flex: 0 0 60%; max-width: 60%; max-height: 450px; height: auto">
@@ -490,6 +486,21 @@
         top_users_table.appendChild(tr)
     }
 </script>
+
+<script type="text/javascript">
+    $(function() {
+                $('#p11 a').miniPreview({ prefetch: 'pageload' });
+                $('#p21 a').miniPreview({ prefetch: 'parenthover' });
+                $('#p31 a').miniPreview({ prefetch: 'none' });
+            });
+</script>
+<script src="https://rawgit.com/shaneapen/Image-Preview-for-Links/master/image_preview_for_links.js"></script>
+
+<script async
+          src="http://guteurls.de/guteurls.js"
+          selector=".aCssClass">
+</script>
+
 
 <script src="{{ url_for('static', filename='js/echarts-en.min-421rc1.js') }}"></script>
 <script src="{{ url_for('static', filename='js/echarts-wordcloud2.min.js') }}"></script>

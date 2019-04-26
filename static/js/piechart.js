@@ -189,8 +189,12 @@ function question_links () {
     for(var j=0;j<array_list.length;j++){
         var td = document.createElement('td');
 
-        var link = "https://stackoverflow.com/questions/" + array_list[j] + "/";
+        // var link = "https://stackoverflow.com/questions/" + array_list[j] + "/";
+        var link = "https://www.linkpreview.net/";
         var a = document.createElement('a');
+
+        a.setAttribute("class", "myP")
+
         a.setAttribute("href", link);
         a.setAttribute("target", "_blank");
 
