@@ -170,9 +170,6 @@ var candlestick_options = {
     ]
 };
 
-
-/*candlestick_options.legend.data = legendData.slice(0, 6);*/
-
 chart.setOption(candlestick_options);
 
 window.onresize = chart.resize;

@@ -187,11 +187,8 @@ function question_links () {
     for(var j=0;j<array_list.length;j++){
         var td = document.createElement('td');
 
-        // var link = "https://stackoverflow.com/questions/" + array_list[j] + "/";
-        var link = "https://www.linkpreview.net/";
+        var link = "https://stackoverflow.com/questions/" + array_list[j] + "/";
         var a = document.createElement('a');
-
-        a.setAttribute("class", "myP")
 
         a.setAttribute("href", link);
         a.setAttribute("target", "_blank");
@@ -239,9 +236,53 @@ wordcloud_chart.on("CLICK", function (x){
 // If legend is added or deleted
 
 piechart_chart.on("legendselectchanged", function (y) {
-    // pichart_option.legend.selected = y.selected;
     selected = y.selected;
     ques_and_ans_tags();
+
+    current_total_selected = 0
+    curr_tags = []
+
+    for(var key in selected) {
+        if (selected[key] == true) {
+            current_total_selected += 1
+            curr_tags.push(key)
+        }
+    }
+
+    var data = rawData.map(function (item) {
+    return [+item[1], +item[2], +item[5], +item[6]];
+    });
+
+    // Set the data candlestick_options.series using a for loop
+    updated_data = []
+    day_count_value = 10
+    for(var i=0;i<current_total_selected;i++) {
+        temp_value = {
+            name: curr_tags[i],
+            type: 'line',
+            data: calculateMA(day_count_value, data),
+            smooth: true,
+            showSymbol: false,
+            lineStyle: {
+                normal: {
+                    width: 1
+                }
+            }
+        }
+
+        day_count_value += 10
+        updated_data.push(temp_value);
+    }
+
+    candlestick_options.series = [];
+    candlestick_options.legend.data = [];
+
+    candlestick_options.legend.data = curr_tags;
+    candlestick_options.series = updated_data;
+
+    chart.setOption(candlestick_options);
+    window.onresize = candlestick_options.resize;
+
 });
 
 piechart_chart.setOption(pichart_option);
