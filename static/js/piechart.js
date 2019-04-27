@@ -141,7 +141,6 @@ function ques_and_ans_tags () {
         }
     }
 
-
     for(var k=0; k<legendData.length; k++) {
         var option = document.createElement('option');
         option.text = legendData[k];
@@ -149,7 +148,6 @@ function ques_and_ans_tags () {
         if(selected[legendData[k]] == true) {
             option.selected = "selected";
         }
-
         tags_list.add(option)
     }
 }
@@ -234,25 +232,16 @@ wordcloud_chart.on("CLICK", function (x){
     window.tags_selected = legendData.slice(0,6);
     candlestick_options.series.map(function(x, i){x.name = this[i];}, window.tags_selected);
 
-    /*candlestick_options.series.map(function(x){
-        var tempData = [];
-        var dataArr = [0,0,3000,3000,3000];
-        for(var i=0;i<rawData.length;i++){
-            dataArr.push(dataArr[dataArr.length-1] + Math.floor(Math.random() * 50 - 25));
-            dataArr.shift();
-            tempData.push(dataArr.reduce((a,b) => a + b, 0) / dataArr.length)
-        }
-        x.data = tempData;
-    });*/
-
-
     candlestick_options.legend.data = window.tags_selected;
     chart.setOption(candlestick_options);
 });
 
+// If legend is added or deleted
 
-piechart_chart.on("CLICK", function (y) {
-    console.log(y);
+piechart_chart.on("legendselectchanged", function (y) {
+    // pichart_option.legend.selected = y.selected;
+    selected = y.selected;
+    ques_and_ans_tags();
 });
 
 piechart_chart.setOption(pichart_option);
