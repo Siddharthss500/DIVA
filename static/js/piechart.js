@@ -150,6 +150,14 @@ function ques_and_ans_tags () {
         }
         tags_list.add(option)
     }
+
+    // Get the tags selected
+    // for(var i=0;i<all_tags_list.children.length;i++) {
+    //     if(all_tags_list.children[i].selected == true) {
+    //         console.log(all_tags_list.children[i].label);
+    //     }
+    // }
+
 }
 
 function question_links () {
@@ -272,6 +280,7 @@ piechart_chart.on("legendselectchanged", function (y) {
 
         day_count_value += 10
         updated_data.push(temp_value);
+        temp_value = {};
     }
 
     candlestick_options.series = [];
@@ -280,7 +289,7 @@ piechart_chart.on("legendselectchanged", function (y) {
     candlestick_options.legend.data = curr_tags;
     candlestick_options.series = updated_data;
 
-    chart.setOption(candlestick_options);
+    chart.setOption(candlestick_options, {notMerge: true});
     window.onresize = candlestick_options.resize;
 
 });
