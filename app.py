@@ -16,11 +16,9 @@ if __name__ == '__main__':
     app.run()
 
     # Tasks left
-    # 1. Put actual data to top tags and then link
-    # 2. Put actual data to trend of tags and then link
-    # 3. Get all questions
-    #     Questions based on tags selected (Priority - All tags to one tag)
-    # 4. Hovering
-    #
-    # 5. Add more programming languages - 30-40
+    # 1. Put actual data to top tags and then link - Done
+    # 1.1 Put actual data for top users - Done
+    # 2. Put actual data to trend of tags and then link - Done
+    # 3. Get all questions and link it
+    # 4. Add a place on top right corner which tells the current programmming language selected
 

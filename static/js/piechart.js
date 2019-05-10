@@ -70,28 +70,26 @@ function genData(selected_tag) {
 
     for (var i = 0; i < related_tags.length; i++) {
 
-        if (selected_tag === related_tags[i]["V1"]) {
+        if (selected_tag == related_tags[i]["V1"]) {
 
             var tags = related_tags[i]["V2"];
             tags = tags.replace(/'/g, '"');
             tags = JSON.parse(tags);
 
-            /*console.log(selected_tag);*/
-
-/*            legendData = [];
-            seriesData = [];
-            selected = {};*/
+            selected = {};
 
             legendData.length = 0;
             seriesData.length = 0;
             selected.length = 0;
 
+            console.log(tags.length);
+
             for (var j = 0; j < tags.length; j++) {
 
-                for (key_tag_val in tags[j]) {
+                for (var key_tag_val in tags[j]) {
 
                     // tag_val = tags[j];
-                    tag_val = key_tag_val;
+                    var tag_val = key_tag_val;
 
                     legendData.push(tag_val);
                     seriesData.push({
@@ -106,6 +104,7 @@ function genData(selected_tag) {
             ques_and_ans_tags();
             question_links();
             /*tags_selected = legendData.slice(0,6);*/
+
 
             return {
                 legendData: legendData,
@@ -233,11 +232,15 @@ wordcloud_chart.on("CLICK", function (x){
     holder.value = x.data.name;
     get_top_user(x.data.name);
     data = genData(holder.value);
+
+    pichart_option.legend.selected = data.selected;
+    pichart_option.legend.data = data.legendData;
+
     piechart_chart.setOption(pichart_option);
     window.tags_selected = legendData.slice(0,6);
-    candlestick_options.series.map(function(x, i){x.name = this[i];}, window.tags_selected);
 
-    candlestick_options.legend.data = window.tags_selected;
+    fill_data(window.tags_selected);
+
     chart.setOption(candlestick_options);
 });
 
@@ -257,40 +260,7 @@ piechart_chart.on("legendselectchanged", function (y) {
         }
     }
 
-    var data = rawData.map(function (item) {
-    return [+item[1], +item[2], +item[5], +item[6]];
-    });
-
-    // Set the data candlestick_options.series using a for loop
-    updated_data = []
-    day_count_value = 10
-    for(var i=0;i<current_total_selected;i++) {
-        temp_value = {
-            name: curr_tags[i],
-            type: 'line',
-            data: calculateMA(day_count_value, data),
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
-                normal: {
-                    width: 1
-                }
-            }
-        }
-
-        day_count_value += 10
-        updated_data.push(temp_value);
-        temp_value = {};
-    }
-
-    candlestick_options.series = [];
-    candlestick_options.legend.data = [];
-
-    candlestick_options.legend.data = curr_tags;
-    candlestick_options.series = updated_data;
-
-    chart.setOption(candlestick_options, {notMerge: true});
-    window.onresize = candlestick_options.resize;
+    fill_data(curr_tags);
 
 });
 
