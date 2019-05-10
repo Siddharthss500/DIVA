@@ -118,6 +118,35 @@ function genData(selected_tag) {
 }
 
 
+// Always listening
+// # If some of the tags are removed or added in the section - Top questions based on tags
+$( ".js-example-basic-multiple" ).change(function() {
+  var selected_vals = {};
+    selected_vals[0] = holder.value;
+    // Get the tags selected
+    for(var i=0;i<all_tags_list.children.length;i++) {
+        if(all_tags_list.children[i].selected == true) {
+            selected_vals[i+1] = all_tags_list.children[i].label;
+        }
+    }
+
+    $.ajax({
+        url: '/update',
+        data: selected_vals,
+    }).done(function (data) {
+
+        var link_numbers = []
+
+        for( var i in data) {
+            for (var j in i) {
+                link_numbers.push(data[i][j])
+            }
+        }
+        question_links(link_numbers);
+    });
+});
+
+
 /*Function to update the tags for Questions and Answers*/
 
 function ques_and_ans_tags () {

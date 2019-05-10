@@ -50,10 +50,10 @@ var wordcloud_option = {
         // alias of square), triangle-forward, triangle, (alias of triangle-upright, pentagon, and star.
         // Shapes: pentagon, star, random-light, random-dark, circle, cardioid, diamond, triangle-forward, triangle, triangle-upright, apple, heart shape curve
         shape: 'apple',
-        width: '105%',
-        height: '105%',
-        /*width: 537,
-        height: 245,*/
+        // width: '105%',
+        // height: '105%',
+        width: 580,
+        height: 245,
         drawOutOfBound: false,
         textStyle: {
             normal: {
