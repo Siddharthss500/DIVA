@@ -12,9 +12,9 @@ $.ajax({
     async: false
 });
 
-var questions_links_location = "/static/data/tags_qid.json";
+var questions_links_location = "/static/data/All_tags_qid.json";
 
-var ques_links = [];
+ques_links = [];
 $.ajax({
     type: 'GET',
     url: questions_links_location,
@@ -30,6 +30,7 @@ var seriesData = [];
 var selected = {};
 var all_selected = [];
 
+var ques_links = [];
 // var tags_selected;
 
 var data = genData(holder.value);
@@ -82,8 +83,6 @@ function genData(selected_tag) {
             seriesData.length = 0;
             selected.length = 0;
 
-            console.log(tags.length);
-
             for (var j = 0; j < tags.length; j++) {
 
                 for (var key_tag_val in tags[j]) {
@@ -102,7 +101,7 @@ function genData(selected_tag) {
             }
 
             ques_and_ans_tags();
-            question_links();
+            // question_links();
             /*tags_selected = legendData.slice(0,6);*/
 
 
@@ -150,16 +149,33 @@ function ques_and_ans_tags () {
         tags_list.add(option)
     }
 
-    // Get the tags selected
-    // for(var i=0;i<all_tags_list.children.length;i++) {
-    //     if(all_tags_list.children[i].selected == true) {
-    //         console.log(all_tags_list.children[i].label);
-    //     }
-    // }
 
+    var selected_vals = {};
+    selected_vals[0] = holder.value;
+    // Get the tags selected
+    for(var i=0;i<all_tags_list.children.length;i++) {
+        if(all_tags_list.children[i].selected == true) {
+            selected_vals[i+1] = all_tags_list.children[i].label;
+        }
+    }
+
+    $.ajax({
+        url: '/update',
+        data: selected_vals,
+    }).done(function (data) {
+
+        var link_numbers = []
+
+        for( var i in data) {
+            for (var j in i) {
+                link_numbers.push(data[i][j])
+            }
+        }
+        question_links(link_numbers);
+    });
 }
 
-function question_links () {
+function question_links (link_numbers) {
 
     var ques_list = document.getElementById("ques_table");
     while(ques_list.hasChildNodes()) {
@@ -171,30 +187,29 @@ function question_links () {
     var array_list;
 
     /*Get all the keys from the json object*/
-    for (key in ques_links) {
+    // for (key in ques_links) {
+    //
+    //     related_tags_list.push(key);
+    //
+    //     var relevant_tag_list = key;
+    //     relevant_tag_list = relevant_tag_list.replace(/'/g, '"');
+    //     relevant_tag_list = JSON.parse(relevant_tag_list);
+    //
+    //     tag_list.push(relevant_tag_list[0])
+    // }
 
-        related_tags_list.push(key);
+    // for(var i=0; i<tag_list.length; i++) {
+    //
+    //     if (tag_list[i] == holder.value) {
+    //         array_list = ques_links[related_tags_list[i]];
+    //     }
+    //
+    // }
 
-        var relevant_tag_list = key;
-        relevant_tag_list = relevant_tag_list.replace(/'/g, '"');
-        relevant_tag_list = JSON.parse(relevant_tag_list);
-
-        tag_list.push(relevant_tag_list[0])
-    }
-
-    for(var i=0; i<tag_list.length; i++) {
-
-        if (tag_list[i] == holder.value) {
-            array_list = ques_links[related_tags_list[i]];
-        }
-
-    }
-
-
-    for(var j=0;j<array_list.length;j++){
+    for(var j=0;j<link_numbers.length;j++){
         var td = document.createElement('td');
 
-        var link = "https://stackoverflow.com/questions/" + array_list[j] + "/";
+        var link = "https://stackoverflow.com/questions/" + link_numbers[j] + "/";
         var a = document.createElement('a');
 
         a.setAttribute("href", link);
@@ -208,23 +223,6 @@ function question_links () {
         ques_list.appendChild(tr)
     }
 
-}
-
-function shuffle(arra1) {
-    var ctr = arra1.length, temp, index;
-
-// While there are elements in the array
-    while (ctr > 0) {
-// Pick a random index
-        index = Math.floor(Math.random() * ctr);
-// Decrease ctr by 1
-        ctr--;
-// And swap the last element with it
-        temp = arra1[ctr];
-        arra1[ctr] = arra1[index];
-        arra1[index] = temp;
-    }
-    return arra1;
 }
 
 /*Store the top users that correspond to the click*/
@@ -242,6 +240,7 @@ wordcloud_chart.on("CLICK", function (x){
     fill_data(window.tags_selected);
 
     chart.setOption(candlestick_options);
+
 });
 
 // If legend is added or deleted
